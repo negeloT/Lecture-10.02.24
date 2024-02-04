@@ -1,0 +1,24 @@
+//PART I.IMPUT
+
+//name
+var name = 'Astana'// название файла
+var crs = 'EPSG:32642'// название системы координат (3576 4326 3857 32637 32641 32648-Байкал)
+var scale = 100 // разрешение для изображения
+var region = Astana //выберите регион для скачивания
+
+
+//PART II.SCRIPT
+//v100 - 2020 год, v200 - 2021 год
+var dataset = ee.Image('COPERNICUS/Landcover/100m/Proba-V-C3/Global/2019')
+.select('discrete_classification');
+Map.addLayer(dataset, {}, "Landcover");
+
+Export.image.toDrive({
+  image:dataset,
+  description:name + '_landcover_2019',
+  folder:'Seminar_10_02_24',
+  scale: scale,
+  region: region,
+  crs:crs,
+  maxPixels:1e12
+})
